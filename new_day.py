@@ -10,11 +10,11 @@ day_template = Template(
 from icecream import ic
 
 
-def part1(input):
+def part1(lines):
     ...
 
 
-def part2(input):
+def part2(lines):
     ...
 
 
@@ -24,9 +24,9 @@ def read_input():
 
 
 if __name__ == "__main__":
-    input = read_input()
-    print(part1(input))
-    print(part2(input))
+    lines = read_input()
+    print(part1(lines))
+    print(part2(lines))
 """
 )
 
