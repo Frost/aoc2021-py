@@ -21,7 +21,7 @@ def part2(lines):
 def calculate_output_value(line):
     ins, out = line.split(" | ")
     input_values = defaultdict(list)
-    translation_map = dict()
+    translate = dict()
     zero_six_nine = list()
     two_three_five = list()
     one = None
@@ -29,48 +29,45 @@ def calculate_output_value(line):
     seven = None
     eight = None
     for i in ins.strip().split(" "):
-        input_values[len(i)].append("".join(sorted(i)))
-        s = "".join(sorted(i))
-        match len(s):
+        iset = frozenset(i)
+        input_values[len(i)].append(iset)
+        match len(iset):
             case 2:
-                one = set(s)
-                translation_map[s] = 1
+                one = iset
+                translate[one] = 1
             case 3:
-                seven = set(s)
-                translation_map[s] = 7
+                seven = iset
+                translate[seven] = 7
             case 4:
-                four = set(s)
-                translation_map[s] = 4
+                four = iset
+                translate[four] = 4
             case 7:
-                eight = set(s)
-                translation_map[s] = 8
+                eight = iset
+                translate[eight] = 8
             case 5:
-                two_three_five.append(s)
+                two_three_five.append(iset)
             case 6:
-                zero_six_nine.append(s)
+                zero_six_nine.append(iset)
 
     for n in zero_six_nine:
-        ns = set(n)
+        ns = frozenset(n)
         if ns | one == eight:
-            translation_map[n] = 6
+            translate[ns] = 6
         elif ns | four == eight:
-            translation_map[n] = 0
+            translate[ns] = 0
         else:
-            translation_map[n] = 9
+            translate[ns] = 9
 
     for n in two_three_five:
-        ns = set(n)
+        ns = frozenset(n)
         if len(ns - four) == 3:
-            translation_map[n] = 2
+            translate[ns] = 2
         elif ns | one == ns:
-            translation_map[n] = 3
+            translate[ns] = 3
         else:
-            translation_map[n] = 5
+            translate[ns] = 5
 
-    outputs = ["".join(sorted(o)) for o in out.strip().split(" ")]
-    output = ""
-    for o in outputs:
-        output += str(translation_map[o])
+    output = "".join([str(translate[frozenset(o)]) for o in out.strip().split(" ")])
 
     return int(output)
 
