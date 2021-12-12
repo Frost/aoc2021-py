@@ -20,7 +20,7 @@ def part2(lines):
 
 def read_input():
     with open("input") as f:
-        f.readlines()
+        return f.readlines()
 
 
 if __name__ == "__main__":
